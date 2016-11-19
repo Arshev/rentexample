@@ -1,0 +1,7 @@
+<h1><% @order.car %></h1>
+
+<% if @user.admin? %>
+    <%= render partial: 'orders/admin_edit_order'%>
+<% else %>
+  <%= render partial: 'orders/return_car'%>
+<% end %>

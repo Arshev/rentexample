@@ -1,0 +1,18 @@
+<script type="text/javascript">
+function update_orders(status) {
+  jQuery.ajax({
+    url: "/orders",
+    type: "GET",
+    data: {"status" : status},
+    dataType: "html",
+    success: function(data) {
+      jQuery("#orders").html(data);
+    }
+  });
+}
+</script>
+
+<%= content_tag(:div, link_to('Rent new car', new_order_path), :class => 'new_order') %><br>
+<%= select_tag :order_selection, options_from_collection_for_select(@order_statuses, 'id', 'description'), :onchange => "update_orders(this.value)" %><br>
+
+<%= content_tag(:div, (render :partial => 'orders', :object => @orders), :id => 'orders') %>

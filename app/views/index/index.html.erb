@@ -1,0 +1,13 @@
+<h1>Cars for rent</h1>
+<%if session[:name].nil?%>
+    <%=link_to 'Login', login_path%>
+    <%=link_to 'Registration', registration_index_path%>
+<%else%>
+    <%rent_user = RentUser.where(:name => session[:name]).first%>
+    <%if rent_user.admin?%>
+        <%=link_to 'Admika', adminka_index_path%>
+    <%else%>
+        <%=link_to 'Rents', orders_path%>
+    <%end%>
+
+<%end%>

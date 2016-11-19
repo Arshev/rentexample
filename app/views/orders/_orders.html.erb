@@ -1,0 +1,86 @@
+<script type="text/javascript">
+  jQuery(function ($) {
+    $(".return_car").click(function () {
+      var current_item_tr = $(this).parents("tr")[0];
+      if (confirm("Are you sure?")){
+        $.ajax({
+          url: "/orders/" + $(current_item_tr).attr('data-order-id'),
+          type: "PATCH",
+          data: {'status': 6},
+          success: function(data) {
+            jQuery(url).html(data);
+          }
+        })
+      }
+    });
+  });
+</script>
+
+
+<% if @orders.empty? %>
+    <%= content_tag(:p, "There are no such orders") %>
+<% else %>
+    <table class="orders">
+      <caption>Orders</caption>
+      <thead>
+      <tr>
+        <th>Client</th>
+        <th>Car</th>
+        <th>Rent Time</th>
+        <th>Cost</th>
+        <th>Status</th>
+        <th>Admin</th>
+        <th>Comment</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @orders.each do |order| %>
+          <tr data-order-id="<%= order.id%>">
+            <td>
+              <%= content_tag(:span, order.client) %>
+            </td>
+            <td>
+              <%= content_tag(:span, link_to(order.car, order_path(order))) %>
+            </td>
+            <td>
+              <%= content_tag(:span, order.rent_time) %>
+            </td>
+            <td>
+              <%= content_tag(:span, order.rent_time * order.car.price) + '$' %>
+            </td>
+            <td>
+              <%= content_tag(:span, order.status) %>
+            </td>
+            <td>
+              <%= content_tag(:span, order.admin) %>
+            </td>
+            <td>
+              <%= content_tag(:span, order.comment)%>
+            </td>
+            <% if  @user.admin?%>
+                <td>
+                  <% unless @completed_orders.include? order.status %>
+                      <%= content_tag(:span, link_to('Change order', edit_order_path(order))) %>
+                  <% end %>
+                </td>
+            <% else %>
+                <td>
+                  <% if @active_orders.include? order.status %>
+                    <%= content_tag(:div, button_tag( "Return Car", :class => 'return_car')) %>
+                  <% end %>
+                </td>
+            <% end %>
+          </tr>
+      <% end %>
+
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="3">Grand Total</th>
+        <th><%= "#{@total_prices}$" %></th>
+      </tr>
+      </tfoot>
+    </table>
+<% end %>
