@@ -1,9 +1,7 @@
 <h1>Crete Fine</h1>
 <%= form_for @fine do |f|%>
     <%= label_tag :order, 'Order: '%>
-    <%= content_tag(:div, (@order.client @order.car), :id => 'order') %><br>
-
-
+    <%= content_tag(:div, ("#{@order.client} - #{@order.car}"), :id => 'order') %><br>
     <%= f.label :reason, 'Reason: ' %>
     <%= f.text_area :reason%><br>
     <%= f.label :cost, 'Cost: ' %>

@@ -1,22 +1,6 @@
-<script type="text/javascript">
-  jQuery(function ($) {
-    $(".return_car").click(function () {
-      var current_item_tr = $(this).parents("tr")[0];
-      if (confirm("Are you sure?")){
-        $.ajax({
-          url: "/orders/" + $(current_item_tr).attr('data-order-id'),
-          type: "PATCH",
-          data: {'status': 6},
-          success: function(data) {
-            jQuery(url).html(data);
-          }
-        })
-      }
-    });
-  });
-</script>
 
 
+<%= content_tag(:div, '', :id => "test_div" ) %>
 <% if @orders.empty? %>
     <%= content_tag(:p, "There are no such orders") %>
 <% else %>
@@ -59,19 +43,21 @@
             <td>
               <%= content_tag(:span, order.comment)%>
             </td>
-            <% if  @user.admin?%>
-                <td>
-                  <% unless @completed_orders.include? order.status %>
-                      <%= content_tag(:span, link_to('Change order', edit_order_path(order))) %>
-                  <% end %>
-                </td>
-            <% else %>
-                <td>
-                  <% if @active_orders.include? order.status %>
-                    <%= content_tag(:div, button_tag( "Return Car", :class => 'return_car')) %>
-                  <% end %>
-                </td>
-            <% end %>
+              <td>
+                <% if @user.admin?%>
+                    <% unless @completed_orders.include? order.status %>
+                        <%= content_tag(:span, link_to('Change order', edit_order_path(order))) %>
+                        <%= content_tag(:span, link_to('Create fine', new_fine_path(order))) %>
+                    <% end %>
+                <% else %>
+                    <% if @active_orders.include? order.status %>
+                        <%= content_tag(:div, button_to("Return Car", return_car_order_path(order.id), {:class => 'return_car', :remote => true, :method => :put})) %>
+                    <% end %>
+                <% end %>
+                <% unless Fine.where(order: order).empty? %>
+                  <%= content_tag(:span, link_to('Fines', fines_path(order))) %>
+                <% end %>
+              </td>
           </tr>
       <% end %>
 

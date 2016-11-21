@@ -1,18 +1,45 @@
 <script type="text/javascript">
-function update_orders(status) {
-  jQuery.ajax({
-    url: "/orders",
-    type: "GET",
-    data: {"status" : status},
-    dataType: "html",
-    success: function(data) {
-      jQuery("#orders").html(data);
-    }
-  });
-}
+  $(function () {
+    $("#order_selection").on("change", function () {
+      status = $(this).val();
+      $.ajax({
+        url: "/orders",
+        type: "GET",
+        data: {"status" : status},
+        dataType: "html",
+        success: function(data) {
+          jQuery("#orders").html(data);
+        }
+      })
+    });
+    $(".return_car").on("click", function () {
+      var current_item_tr = $(this).parents("tr")[0];
+      var order_id = $(current_item_tr).attr("data-order-id");
+      var status = $("#order_selection").val();
+      if (confirm("Are you sure?")){
+        $.ajax({
+          url: "orders/" + order_id + "/return_car",
+          type: 'PUT',
+          contentType: 'application/json',
+          dataType: 'json',
+          data: JSON.stringify({"order": order_id, "status": status}),
+          success: function(data, status, jq) {
+            jQuery("#orders").html(data);
+          },
+          error: function (jq, status, err){
+            document.getElementById("test_div").innerHTML = "err: " + err + "\nstatus: " + status + "\njq: " + jq
+          }
+        })
+      }
+    })
+  })
+
 </script>
 
-<%= content_tag(:div, link_to('Rent new car', new_order_path), :class => 'new_order') %><br>
-<%= select_tag :order_selection, options_from_collection_for_select(@order_statuses, 'id', 'description'), :onchange => "update_orders(this.value)" %><br>
 
-<%= content_tag(:div, (render :partial => 'orders', :object => @orders), :id => 'orders') %>
+  <%= content_tag(:div, link_to('Rent new car', new_order_path), :class => 'new_order') %><br>
+  <%= select_tag :order_selection, options_from_collection_for_select(@order_statuses, 'id', 'description') %><br>
+<form id="form">
+  <%= content_tag(:div, (render :partial => 'orders', :object => @orders), :id => 'orders') %>
+</form>
+

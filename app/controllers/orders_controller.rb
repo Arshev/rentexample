@@ -2,29 +2,28 @@ class OrdersController < ApplicationController
   include OrdersHelper
   before_filter :get_user
   before_filter :find_order, only: [:show, :edit, :update]
-  before_filter :check_if_admin, only: [:index, :edit, :update]
+  before_filter :check_if_admin, only: [:edit, :update]
+  before_filter :active_orders, only: [:index, :return_car]
 
 
   def index
     @order_statuses = order_statuses
-    @active_orders = active_orders
     @completed_orders = completed_orders
-    if params[:status].nil?
-      @orders = Order.all
-      total_prices
-    elsif OrderStatus.find(params[:status]).description == 'All'
-      @orders = Order.all
-      total_prices
-      render :partial => "orders", :object => @orders
-    else
-      @orders = Order.where(:status => params[:status])
-      total_prices
-      render :partial => "orders", :object => @orders
-    end
+    orders_for_status(params[:status])
   end
 
   def return_car
-
+    order_id = params['id']
+    car_returned = OrderStatus.where(:description => 'Car returned').first
+    respond_to do |format|
+      update_successful = Order.find(order_id).update_attributes(:status => car_returned)
+      if update_successful
+          redirect_to orders_path
+        format.json { render json: {} }
+      else
+        format.json { render json: update_successful.errors.to_json }
+      end
+    end
   end
 
   def show
@@ -52,7 +51,7 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order_statuses = order_statuses
+    @order_statuses = OrderStatus.where.not(:description => 'All')#order_statuses
     @car_conditions = car_conditions
   end
 
@@ -107,7 +106,7 @@ class OrdersController < ApplicationController
   end
 
   def active_orders
-    OrderStatus.where(:description => ['Received', 'Approved', 'In Progress', 'Car returned'])
+    @active_orders = OrderStatus.where(:description => ['Received', 'Approved', 'In Progress'])
   end
 
   def completed_orders
@@ -120,5 +119,20 @@ class OrdersController < ApplicationController
 
   def current_user
     RentUser.where(:name => session[:name]).first
+  end
+
+  def orders_for_status(status)
+    if status.nil?
+      @orders = Order.all
+      total_prices
+    elsif OrderStatus.find(status).description == 'All'
+      @orders = Order.all
+      total_prices
+      render :partial => "orders", :object => @orders
+    else
+      @orders = Order.where(:status => status)
+      total_prices
+      render :partial => "orders", :object => @orders
+    end
   end
 end

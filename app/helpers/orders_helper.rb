@@ -11,6 +11,6 @@ module OrdersHelper
   end
 
   def order_statuses
-    OrderStatus.all
+    OrderStatus.order(:description)
   end
 end

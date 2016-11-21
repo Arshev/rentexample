@@ -1,2 +1,42 @@
 <h1>Fines#index</h1>
-<p>Find me in app/views/fines/index.html.erb</p>
+</p><% if @fines.empty? %>
+    <%= content_tag(:p, "There are no such orders") %>
+<% else %>
+    <table class="orders">
+      <caption>Fine for Order <%= @order.id %> </caption>
+      <thead>
+      <tr>
+        <th>Fine id</th>
+        <th>Order</th>
+        <th>Reason</th>
+        <th>Cost</th>
+        <!--<th>Status</th>-->
+        <!--<th>Admin</th>-->
+        <!--<th>Comment</th>-->
+        <!--<th>Actions</th>-->
+      </tr>
+      </thead>
+      <tbody>
+
+      <% @fines.each do |fine| %>
+          <tr data-fine-id="<%= fine.id%>">
+            <td>
+              <%= content_tag(:span, link_to(fine.id, fine_path(fine))) %>
+            </td>
+            <td>
+              <%= content_tag(:span, fine.order) %>
+            </td>
+            <td>
+              <%= content_tag(:span, fine.reason) + '$' %>
+            </td>
+            <td>
+              <%= content_tag(:span, fine.cost) %>
+            </td>
+          </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+<% end %>
+
+

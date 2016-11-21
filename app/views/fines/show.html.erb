@@ -1,2 +1,11 @@
-<h1>Fines#show</h1>
-<p>Find me in app/views/fines/show.html.erb</p>
+<h1><%= "Fine: #{@fine.id}"%></h1>
+
+<div id="fine">
+  <%= content_tag(:p, "Client: #{@fine.order.client}") %>
+  <%= content_tag(:p, "Car: #{@fine.order.car}") %>
+  <%= content_tag(:p, "Reason: #{@fine.reason}") %>
+  <%= content_tag(:p, "Cost: #{@fine.cost}$") %>
+</div>
+
+
+<%= link_to 'Orders', orders_path %>

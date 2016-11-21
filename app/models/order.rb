@@ -5,4 +5,8 @@ class Order < ApplicationRecord
   belongs_to :status, class_name: 'OrderStatus'
 
   validates :car, :passport, :rent_time, :presence => true
+
+  def to_s
+    "#{self.client}: #{self.car}"
+  end
 end
