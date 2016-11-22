@@ -1,17 +1,8 @@
-<div class="login">
-  <div class="heading">
-    <h2>Sign in</h2>
-    <%=form_tag('/login', method: 'post') do %>
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <%=text_field_tag :name, nil, :class => "form-control", :placeholder => "Username" %><br />
-        </div>
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <%=password_field_tag :password, nil, :class => "form-control" ,:placeholder => "Password" %><br />
-        </div>
-
-        <%=submit_tag 'Login', :class => "float" %>
-    <% end %>
-  </div>
+<div class="form-style-6">
+  <h1>Sign in</h1>
+  <%=form_tag('/login', method: 'post') do %>
+      <%=text_field_tag :name, nil, :class => "form-control", :placeholder => "Username" %><br />
+      <%=password_field_tag :password, nil, :class => "form-control" ,:placeholder => "Password" %><br />
+      <%=submit_tag 'Login', :class => "float" %>
+  <% end %>
 </div>

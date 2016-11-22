@@ -12,7 +12,6 @@ class LoginController < ApplicationController
         redirect_to adminka_index_path
       else
         redirect_to orders_path
-        # redirect_to rent_car_index_path
       end
     end
   end

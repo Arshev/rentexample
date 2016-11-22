@@ -1,5 +1,5 @@
 class FinesController < ApplicationController
-  before_filter :order_for_fines, only: [:index, :show, :create]
+  before_filter :order_for_fines, only: [:index, :new, :show, :create]
 
   def index
     @fines = Fine.where(order: @order)

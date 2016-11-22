@@ -1,17 +1,19 @@
-<%= form_for @order do |f| %>
-    <%= f.label :car, 'Chosen car: '%>
-    <%= f.text_field :car, :disabled => true%><br>
-    <%= f.label :client, 'Client: '%>
-    <%= f.text_field :client, :disabled => true %><br>
-    <%= f.label :rent_time, 'Rent time: '%>
-    <%= f.text_field :rent_time, :disabled => true %><br>
-    <%= f.label :admin, 'Admin: '%>
-    <%= f.text_field :admin, :disabled => true %><br>
-    <%= f.label :status, 'Select Order Status: '%>
-    <%= f.select :status, options_from_collection_for_select(@order_statuses, 'id', 'description')%><br>
-    <%= label_tag :condition, 'Select Car Condition: '%>
-    <%= select_tag :condition, options_from_collection_for_select(@car_conditions, 'id', 'description')%><br>
-    <%= f.label :comment, 'Comment: '%>
-    <%= f.text_area :comment %><br>
-    <%= f.submit 'Update Order' %>
+<%= form_for@order do |f| %>
+    <div class="form-style-6">
+      <%= f.label :car, 'Chosen car: '%>
+      <%= f.text_field :car, :disabled => true%><br>
+      <%= f.label :client, 'Client: '%>
+      <%= f.text_field :client, :disabled => true %><br>
+      <%= f.label :rent_time, 'Rent time: '%>
+      <%= f.text_field :rent_time, :disabled => true %><br>
+      <%= f.label :admin, 'Admin: '%>
+      <%= f.text_field :admin, :disabled => true %><br>
+      <%= f.label :status, 'Select Order Status: '%>
+      <%= f.select :status, options_from_collection_for_select(@order_statuses, 'id', 'description')%><br>
+      <%= label_tag :condition, 'Select Car Condition: '%>
+      <%= select_tag :condition, options_from_collection_for_select(@car_conditions, 'id', 'description')%><br>
+      <%= f.label :comment, 'Comment: '%>
+      <%= f.text_area :comment %><br>
+      <%= f.submit 'Update Order' %>
+    </div>
 <% end %>

@@ -1,11 +1,43 @@
-<h1><%= "Fine: #{@fine.id}"%></h1>
-
-<div id="fine">
-  <%= content_tag(:p, "Client: #{@fine.order.client}") %>
-  <%= content_tag(:p, "Car: #{@fine.order.car}") %>
-  <%= content_tag(:p, "Reason: #{@fine.reason}") %>
-  <%= content_tag(:p, "Cost: #{@fine.cost}$") %>
+<%= link_to 'Orders', orders_path %>
+<div class="form-style-6">
+  <h1><%= "Fine: #{@fine.id}"%></h1>
+  <div id="fine">
+    <table>
+      <tr>
+        <td>
+          <%= content_tag(:p, "Client:") %>
+        </td>
+        <td>
+          <%= content_tag(:p, @fine.order.client) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= content_tag(:p, "Car:") %>
+        </td>
+        <td>
+          <%= content_tag(:p, @fine.order.car) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= content_tag(:p, "Reason:") %>
+        </td>
+        <td>
+          <%= content_tag(:p, @fine.reason) %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= content_tag(:p, "Cost:") %>
+        </td>
+        <td>
+          <%= content_tag(:p, "#{@fine.cost}$") %>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 
-<%= link_to 'Orders', orders_path %>
+

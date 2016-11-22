@@ -1,0 +1,6 @@
+<% if @car.nil? %>
+    <%= content_tag :span, price %><br><br>
+<% else %>
+    <%= label :price, "Price per day: " %>
+    <%= content_tag :span, @car.price %><br><br>
+<% end %>

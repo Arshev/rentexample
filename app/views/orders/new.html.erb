@@ -1,25 +1,33 @@
 <script type="text/javascript">
-//    function update_prices(id) {
-//      jQuery.ajax({
-//        url: "/",
-//        type: "GET",
-//        data: {"id" : id},
-//        dataType: "html",
-//        success: function(data) {
-//          jQuery("#price").html(data);
-//        }
-//      });
-//    }
+    $(function () {
+      $("#order_car").on('change', function () {
+        car = $(this).val();
+        $.ajax({
+          url: '/cars',
+          type: 'GET',
+          data: {"car" : car},
+          dataType: "html",
+          success: function(data) {
+            jQuery("#car_price").html(data);
+          },
+          error: function (jq, status, err) {
+            alert("error on car select: " + err);
+          }
+        })
+      })
+    })
 </script>
-<h1>Rent Car</h1>
+
 <%= form_for @order do |f|%>
-    <%= f.label :car, 'Choose a car: '%>
-    <%= f.select :car, options_from_collection_for_select(@available_cars, "id", "brand") %><br>
-
-
-    <%= f.label :passport, 'Your passport: '%>
-    <%= f.text_field :passport%><br>
-    <%= f.label :rent_time, 'Rent Time: '%>
-    <%= f.text_field :rent_time%><br>
-    <%= f.submit 'Submmit' %>
+    <div class="form-style-6">
+      <h1>Rent Car</h1>
+      <%= f.label :car, 'Choose a car: '%>
+      <%= f.select :car, options_from_collection_for_select(@available_cars, "id", "brand"), include_blank: true %><br>
+      <%= content_tag(:span, (render :partial => 'cars/price', :object => @car), :id => 'car_price') %>
+      <%= f.label :passport, 'Your passport: '%>
+      <%= f.text_field :passport%><br>
+      <%= f.label :rent_time, 'Rent Time: '%>
+      <%= f.text_field :rent_time%><br>
+      <%= f.submit 'Submmit' %>
+    </div>
 <% end %>

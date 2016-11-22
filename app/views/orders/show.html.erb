@@ -1,12 +1,73 @@
-<h1><%= @order.car%></h1>
-
-<%= content_tag(:p, "Client: #{@order.client}") %>
-<%= content_tag(:p, "Rent Time: #{@order.rent_time}") %>
-<%= content_tag(:p, "Car Price: #{@order.car.price}") %>
-<%= content_tag(:p, "Admin: #{@order.admin}") %>
-<%= content_tag(:p, "Car Status: #{@order.car.status}") %>
-<%= content_tag(:p, "Car Condition: #{@order.car.condition}") %>
-<%= content_tag(:p, "Total Cost: #{@order.car.price * @order.rent_time}") %>
-
-<%= content_tag(:p, "Comment: #{@order.comment}") %>
 <%= link_to 'Orders', orders_path %>
+    <div class="form-style-6">
+      <h1><%= @order.car%></h1>
+      <table class="order_details">
+        <tbody>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Client:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.client) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Rent Time:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.rent_time) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Car Price:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.car.price) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Admin:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.admin) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Car Status:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.car.status) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Car Condition:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.car.condition) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Total Cost:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.car.price * @order.rent_time) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= content_tag(:span, "Comment:") %>
+          </td>
+          <td>
+            <%= content_tag(:span, @order.comment) %>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
