@@ -1,6 +1,6 @@
 <div class="form-style-6">
   <h1>Registration of new user</h1>
-  <%=form_for(@rent_user, url: {action: :create}, class: 'form-style-6')do |f|%>
+  <%=form_for(@rent_user, url: {action: :create})do |f|%>
       <%= f.label :name %>:
       <%= f.text_field :name %><br>
       <%= f.label :email %>:
